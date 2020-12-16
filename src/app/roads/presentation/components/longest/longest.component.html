@@ -1,0 +1,36 @@
+<div class="wrapper">
+  <div class="card" *ngIf="roads$ | withLoading | async as roads">
+    <div class="card__header bottom-border">
+      <img class="back-icon" src="/assets/back.svg" routerLink="/">
+      <div class="card__text">Самая длинная дорога</div>
+      <button class="btn" (click)="update()" [disabled]="roads.loading">Обновить</button>
+    </div>
+    <div class="row bottom-border">
+      <div class="col">Место</div>
+      <div class="col">Расстояние (км)</div>
+      <div class="col">Города</div>
+    </div>
+    <ng-template [ngIf]="roads.value">
+      <div *ngFor="let road of roads.value" class="row bottom-border">
+        <div class="col">{{ road.place }}</div>
+        <div class="col">{{ road.length }}</div>
+        <div class="col">{{ road.name }}</div>
+      </div>
+    </ng-template>
+    <ng-template [ngIf]="roads.error">
+      <div class="row">
+        <div class="col">
+          <img class="warning-icon" src="/assets/warning.svg" routerLink="/">
+          <div>Что-то пошло не так, попробуйте обновить страницу.</div>
+        </div>
+      </div>
+    </ng-template>
+    <ng-template [ngIf]="roads.loading">
+      <div class="row">
+        <div class="col">
+          <div class="lds-dual-ring"></div>
+        </div>
+      </div>
+    </ng-template>
+  </div>
+</div>
